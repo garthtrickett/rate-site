@@ -56,50 +56,102 @@ export default component$(() => {
   const signupUserAction = useSignupUser();
   return (
     <>
-      <Form
-        action={signupUserAction}
-        class="form-control max-w-lg mx-auto mt-32"
-      >
-        <label for="names" class="label">
-          Nombres
-        </label>
-        <input type="text" name="names" class="input bg-base-200" id="names" />
+      <Form action={signupUserAction} class="mx-auto max-w-sm space-y-6 mt-32">
+        <div class="space-y-2 text-center">
+          <h1 class="text-3xl font-bold">Sign Up</h1>
+          <p class="text-gray-500 dark:text-gray-400">
+            Enter your information to create an account
+          </p>
+        </div>
 
-        <label for="lastNames" class="label">
-          Apellidos
-        </label>
-        <input
-          type="text"
-          name="lastNames"
-          class="input bg-base-200"
-          id="lastNames"
-        />
-
-        <label for="username" class="label">
-          Username
-        </label>
-        <input id="username" name="username" class="input bg-base-200" />
-
-        <label for="password" class="label">
-          Password
-        </label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          class="input bg-base-200"
-        />
-
-        <button type="submit" class="btn btn-primary my-2">
-          Signup
-        </button>
-
-        <p class="py-4">
-          Already have an account?{" "}
-          <Link href="/login/" class="link-primary">
+        <div
+          class="rounded-lg border bg-card text-card-foreground shadow-sm p-4"
+          data-v0-t="card"
+        >
+          <div class="space-y-4">
+            <div class="grid grid-cols-2 gap-4">
+              <div class="space-y-2">
+                <label
+                  class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  for="names"
+                >
+                  First Name
+                </label>
+                <input
+                  type="text"
+                  name="names"
+                  class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  id="names"
+                  placeholder="Lee"
+                  required
+                />
+              </div>
+              <div class="space-y-2">
+                <label
+                  class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  for="lastNames"
+                >
+                  Last Name
+                </label>
+                <input
+                  type="text"
+                  name="lastNames"
+                  class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  id="lastNames"
+                  placeholder="Robinson"
+                  required
+                />
+              </div>
+            </div>
+            <div class="space-y-2">
+              <label
+                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                for="username"
+              >
+                Username
+              </label>
+              <input
+                id="username"
+                name="username"
+                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                placeholder="lrobinson"
+                required
+              />
+            </div>
+            <div class="space-y-2">
+              <label
+                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                for="password"
+              >
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full"
+            >
+              Signup
+            </button>
+          </div>
+        </div>
+        <div class="text-center">
+          <span class="text-sm text-gray-500 dark:text-gray-400">
+            Already have an account?
+          </span>
+          <Link
+            href="/login/"
+            class="text-sm text-blue-500 hover:underline ml-1"
+          >
             Login
           </Link>
-        </p>
+        </div>
       </Form>
     </>
   );

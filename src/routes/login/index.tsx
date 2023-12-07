@@ -43,7 +43,7 @@ export default component$(() => {
   const loginAction = useLoginAction();
   return (
     <>
-      <Form action={loginAction} class="mx-auto max-w-[350px] space-y-6">
+      <Form action={loginAction} class="mx-auto max-w-[350px] space-y-6 mt-32">
         <div class="space-y-2 text-center">
           <h1 class="text-3xl font-bold">Login</h1>
           <p class="text-gray-500 dark:text-gray-400">
@@ -66,7 +66,7 @@ export default component$(() => {
                 id="username"
                 name="username"
                 class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                required=""
+                required
               />
             </div>
             <div class="space-y-2">
@@ -81,7 +81,7 @@ export default component$(() => {
                 id="password"
                 name="password"
                 class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                required=""
+                required
               />
             </div>
             <button
