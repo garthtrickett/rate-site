@@ -1,5 +1,5 @@
-import { component$ } from '@builder.io/qwik';
-import { routeLoader$ } from '@builder.io/qwik-city';
+import { component$ } from "@builder.io/qwik";
+import { routeLoader$ } from "@builder.io/qwik-city";
 import {
   type DocumentHead,
   routeAction$,
@@ -7,14 +7,14 @@ import {
   z,
   Form,
   Link,
-} from '@builder.io/qwik-city';
-import { auth } from '~/lib/lucia';
+} from "@builder.io/qwik-city";
+import { auth } from "~/lib/lucia";
 
 export const useUserLoader = routeLoader$(async (event) => {
   const authRequest = auth.handleRequest(event);
   const session = await authRequest.validate();
   if (session) {
-    throw event.redirect(303, '/');
+    throw event.redirect(303, "/");
   }
 
   return {};
@@ -23,7 +23,7 @@ export const useUserLoader = routeLoader$(async (event) => {
 export const useLoginAction = routeAction$(
   async (values, event) => {
     const authRequest = auth.handleRequest(event);
-    const key = await auth.useKey('username', values.username, values.password);
+    const key = await auth.useKey("username", values.username, values.password);
 
     const session = await auth.createSession({
       userId: key.userId,
@@ -31,55 +31,84 @@ export const useLoginAction = routeAction$(
     });
     authRequest.setSession(session);
 
-    throw event.redirect(303, '/');
+    throw event.redirect(303, "/");
   },
   zod$({
     username: z.string(),
     password: z.string(),
-  })
+  }),
 );
 
 export default component$(() => {
   const loginAction = useLoginAction();
   return (
     <>
-      <Form action={loginAction} class="form-control max-w-lg mx-auto mt-32">
-        <label for="username" class="label">
-          Username
-        </label>
-        <input id="username" name="username" class="input bg-base-200" />
-
-        <label for="password" class="label">
-          Password
-        </label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          class="input bg-base-200"
-        />
-
-        <button type="submit" class="btn btn-primary my-2">
-          Login
-        </button>
-
-        <p class="py-4">
-          Dont have an account?{' '}
-          <Link href="/signup" class="link-primary">
-            Signup
-          </Link>
-        </p>
+      <Form action={loginAction} class="mx-auto max-w-[350px] space-y-6">
+        <div class="space-y-2 text-center">
+          <h1 class="text-3xl font-bold">Login</h1>
+          <p class="text-gray-500 dark:text-gray-400">
+            Enter your credentials to login
+          </p>
+        </div>
+        <div
+          class="rounded-lg border bg-card text-card-foreground shadow-sm"
+          data-v0-t="card"
+        >
+          <div class="space-y-4 p-4">
+            <div class="space-y-2">
+              <label
+                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                for="username"
+              >
+                Username
+              </label>
+              <input
+                id="username"
+                name="username"
+                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                required=""
+              />
+            </div>
+            <div class="space-y-2">
+              <label
+                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                for="password"
+              >
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                required=""
+              />
+            </div>
+            <button
+              type="submit"
+              class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full"
+            >
+              Login
+            </button>
+            <div class="mt-4 text-center text-sm">
+              Don't have an account?{" "}
+              <Link href="/signup" class="underline">
+                Sign Up
+              </Link>
+            </div>
+          </div>
+        </div>
       </Form>
     </>
   );
 });
 
 export const head: DocumentHead = {
-  title: 'Login Page',
+  title: "Login Page",
   meta: [
     {
-      name: 'description',
-      content: 'This is the login page',
+      name: "description",
+      content: "This is the login page",
     },
   ],
 };

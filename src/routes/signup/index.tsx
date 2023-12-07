@@ -1,4 +1,4 @@
-import { component$ } from '@builder.io/qwik';
+import { component$ } from "@builder.io/qwik";
 import {
   type DocumentHead,
   routeAction$,
@@ -7,14 +7,14 @@ import {
   Form,
   routeLoader$,
   Link,
-} from '@builder.io/qwik-city';
-import { auth } from '~/lib/lucia';
+} from "@builder.io/qwik-city";
+import { auth } from "~/lib/lucia";
 
 export const useUserLoader = routeLoader$(async (event) => {
   const authRequest = auth.handleRequest(event);
   const session = await authRequest.validate();
   if (session) {
-    throw event.redirect(303, '/');
+    throw event.redirect(303, "/");
   }
 
   return {};
@@ -25,7 +25,7 @@ export const useSignupUser = routeAction$(
     const authRequest = auth.handleRequest(event);
     const user = await auth.createUser({
       key: {
-        providerId: 'username',
+        providerId: "username",
         providerUserId: values.username,
         password: values.password,
       },
@@ -42,14 +42,14 @@ export const useSignupUser = routeAction$(
     authRequest.setSession(session);
 
     // redirect to home page
-    throw event.redirect(303, '/');
+    throw event.redirect(303, "/");
   },
   zod$({
     username: z.string().min(2),
     password: z.string().min(5),
     names: z.string().min(2),
     lastNames: z.string().min(2),
-  })
+  }),
 );
 
 export default component$(() => {
@@ -95,7 +95,7 @@ export default component$(() => {
         </button>
 
         <p class="py-4">
-          Already have an account?{' '}
+          Already have an account?{" "}
           <Link href="/login/" class="link-primary">
             Login
           </Link>
@@ -106,11 +106,11 @@ export default component$(() => {
 });
 
 export const head: DocumentHead = {
-  title: 'Signup Page',
+  title: "Signup Page",
   meta: [
     {
-      name: 'description',
-      content: 'This is the signup page',
+      name: "description",
+      content: "This is the signup page",
     },
   ],
 };
