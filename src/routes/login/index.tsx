@@ -90,13 +90,18 @@ export default component$(() => {
             >
               Login
             </button>
-            <div class="mt-4 text-center text-sm">
-              Don't have an account?{" "}
-              <Link href="/signup" class="underline">
-                Sign Up
-              </Link>
-            </div>
           </div>
+        </div>
+        <div class="text-center">
+          <span class="text-sm text-gray-500 dark:text-gray-400">
+            Don't have an account?{" "}
+          </span>
+          <Link
+            href="/signup/"
+            class="text-sm text-blue-500 hover:underline ml-1"
+          >
+            Sign Up
+          </Link>
         </div>
       </Form>
     </>
