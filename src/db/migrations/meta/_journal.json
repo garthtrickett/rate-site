@@ -1,0 +1,13 @@
+{
+  "version": "5",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1701913020553,
+      "tag": "0000_rapid_luke_cage",
+      "breakpoints": true
+    }
+  ]
+}
