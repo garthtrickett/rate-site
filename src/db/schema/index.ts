@@ -71,7 +71,7 @@ export const organisations = mysqlTable('organisation', {
 export const professionals = mysqlTable('professional', {
   id: serial('id').primaryKey().autoincrement(),
   name: varchar('name', { length: 256 }),
-  userId: varchar('user_id', { length: 191 }).notNull()
+  userId: varchar('user_id', { length: 191 })
   // add other fields as necessary
 })
 
@@ -112,7 +112,7 @@ export const organisationsRelations = relations(organisations, ({ many }) => ({
 export const customers = mysqlTable('customer', {
   id: serial('id'),
   name: varchar('name', { length: 256 }),
-  userId: varchar('user_id', { length: 15 }).notNull()
+  userId: varchar('user_id', { length: 15 })
 })
 
 export const customersRelations = relations(customers, ({ many }) => ({
