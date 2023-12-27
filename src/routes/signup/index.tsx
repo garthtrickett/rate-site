@@ -1,4 +1,4 @@
-import { component$ } from "@builder.io/qwik";
+import { component$ } from '@builder.io/qwik'
 import {
   type DocumentHead,
   routeAction$,
@@ -6,54 +6,54 @@ import {
   z,
   Form,
   routeLoader$,
-  Link,
-} from "@builder.io/qwik-city";
-import { auth } from "~/lib/lucia";
+  Link
+} from '@builder.io/qwik-city'
+import { auth } from '~/lib/lucia'
 
-export const useUserLoader = routeLoader$(async (event) => {
-  const authRequest = auth.handleRequest(event);
-  const session = await authRequest.validate();
+export const useUserLoader = routeLoader$(async event => {
+  const authRequest = auth.handleRequest(event)
+  const session = await authRequest.validate()
   if (session) {
-    throw event.redirect(303, "/");
+    throw event.redirect(303, '/')
   }
 
-  return {};
-});
+  return {}
+})
 
 export const useSignupUser = routeAction$(
   async (values, event) => {
-    const authRequest = auth.handleRequest(event);
+    const authRequest = auth.handleRequest(event)
     const user = await auth.createUser({
       key: {
-        providerId: "username",
+        providerId: 'username',
         providerUserId: values.username,
-        password: values.password,
+        password: values.password
       },
       attributes: {
         username: values.username,
         names: values.names,
-        last_names: values.lastNames,
-      },
-    });
+        last_names: values.lastNames
+      }
+    })
     const session = await auth.createSession({
       userId: user.userId,
-      attributes: {},
-    });
-    authRequest.setSession(session);
+      attributes: {}
+    })
+    authRequest.setSession(session)
 
     // redirect to home page
-    throw event.redirect(303, "/");
+    throw event.redirect(303, '/')
   },
   zod$({
     username: z.string().min(2),
     password: z.string().min(5),
     names: z.string().min(2),
-    lastNames: z.string().min(2),
-  }),
-);
+    lastNames: z.string().min(2)
+  })
+)
 
 export default component$(() => {
-  const signupUserAction = useSignupUser();
+  const signupUserAction = useSignupUser()
   return (
     <>
       <Form action={signupUserAction} class="mx-auto max-w-sm space-y-6 mt-32">
@@ -154,15 +154,15 @@ export default component$(() => {
         </div>
       </Form>
     </>
-  );
-});
+  )
+})
 
 export const head: DocumentHead = {
-  title: "Signup Page",
+  title: 'Signup Page',
   meta: [
     {
-      name: "description",
-      content: "This is the signup page",
-    },
-  ],
-};
+      name: 'description',
+      content: 'This is the signup page'
+    }
+  ]
+}

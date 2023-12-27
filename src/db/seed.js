@@ -1,0 +1,97 @@
+import { db } from './index.ts'
+import {
+  users,
+  organisations,
+  professionals,
+  professionalOrganisationMapping,
+  customers,
+  commonReviewFields,
+  organisationReviews,
+  professionalReviews
+} from './schema/index.ts'
+import { randomUUID } from 'crypto'
+
+async function seed() {
+  // Wipe all rows in the tables
+  await db.delete(users)
+  await db.delete(organisations)
+  await db.delete(professionals)
+  await db.delete(professionalOrganisationMapping)
+  await db.delete(customers)
+  await db.delete(commonReviewFields)
+  await db.delete(organisationReviews)
+  await db.delete(professionalReviews)
+
+  const org = await db.insert(organisations).values({
+    name: 'Your organisation name'
+  })
+
+  // List of hard-coded full names
+  const professionalNames = [
+    'Edward Scissorhands',
+    'John Doe',
+    'Jane Smith',
+    'Alice Johnson',
+    'Bob Williams',
+    'Charlie Brown'
+  ]
+
+  // Insert professionals with hard-coded full names
+  for (let i = 0; i < professionalNames.length; i++) {
+    const userProf = await db.insert(users).values({
+      username: `Professional User ${i + 1}`,
+      userType: 'professional',
+      id: randomUUID()
+    })
+
+    console.log(userProf)
+
+    // Extract the UUID from the statement string
+    const uuidRegex =
+      /[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/g
+    const match = userProf.statement.match(uuidRegex)
+    const userId = match ? match[0] : null
+
+    const prof = await db.insert(professionals).values({
+      name: professionalNames[i],
+      userId // use the extracted UUID
+    })
+
+    await db.insert(professionalOrganisationMapping).values({
+      professionalId: Number(prof.insertId),
+      organisationId: Number(org.insertId)
+    })
+  }
+
+  const userCust = await db.insert(users).values({
+    username: 'Your customer username',
+    userType: 'customer',
+    id: randomUUID()
+  })
+
+  const cust = await db.insert(customers).values({
+    userId: userCust.insertId,
+    name: 'Your customer name'
+  })
+
+  // const commonReview = await db.insert(commonReviewFields).values({
+  //   rating: 5,
+  //   comments: 'Your review comments'
+  // })
+
+  // await db.insert(organisationReviews).values({
+  //   commonReviewFieldsId: Number(commonReview.insertId),
+  //   organisationId: Number(org.insertId),
+  //   customerId: Number(cust.insertId)
+  // })
+
+  // await db.insert(professionalReviews).values({
+  //   commonReviewFieldsId: Number(commonReview.insertId),
+  //   professionalId: Number(prof.insertId),
+  //   customerId: Number(cust.insertId)
+  // })
+}
+
+seed()
+  .then(() => console.log('Seeding completed'))
+  .catch(error => console.error('Seeding failed:', error))

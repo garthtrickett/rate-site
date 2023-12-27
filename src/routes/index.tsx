@@ -1,31 +1,31 @@
-import { component$ } from '@builder.io/qwik';
-import { Form, routeAction$, routeLoader$ } from '@builder.io/qwik-city';
-import { auth } from '~/lib/lucia';
+import { component$ } from '@builder.io/qwik'
+import { Form, routeAction$, routeLoader$ } from '@builder.io/qwik-city'
+import { auth } from '~/lib/lucia'
 
-export const useUserLoader = routeLoader$(async (event) => {
-  const authRequest = auth.handleRequest(event);
-  const session = await authRequest.validate();
+export const useUserLoader = routeLoader$(async event => {
+  const authRequest = auth.handleRequest(event)
+  const session = await authRequest.validate()
   if (!session) {
-    throw event.redirect(303, '/login');
+    return null // return null or some default user object when validation fails
   }
 
-  return session.user;
-});
+  return session.user
+})
 
 export const useLogoutUserAction = routeAction$(async (values, event) => {
-  const authRequest = auth.handleRequest(event);
-  const session = await authRequest.validate();
+  const authRequest = auth.handleRequest(event)
+  const session = await authRequest.validate()
 
-  if (!session) throw event.redirect(302, '/login');
-
-  await auth.invalidateSession(session.sessionId);
-  authRequest.setSession(null);
-  throw event.redirect(302, '/login');
-});
+  if (session) {
+    await auth.invalidateSession(session.sessionId)
+    authRequest.setSession(null)
+  }
+  // no redirection here
+})
 
 export default component$(() => {
-  const userLoader = useUserLoader();
-  const logoutUserAction = useLogoutUserAction();
+  const userLoader = useUserLoader()
+  const logoutUserAction = useLogoutUserAction()
   return (
     <div class="m-8">
       <pre>
@@ -42,5 +42,5 @@ export default component$(() => {
         </button>
       </Form>
     </div>
-  );
-});
+  )
+})

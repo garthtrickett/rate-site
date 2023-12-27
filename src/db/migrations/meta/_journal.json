@@ -8,6 +8,34 @@
       "when": 1701913020553,
       "tag": "0000_rapid_luke_cage",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1703666566363,
+      "tag": "0001_outgoing_kingpin",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1703668458584,
+      "tag": "0002_wise_dexter_bennett",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1703670012613,
+      "tag": "0003_youthful_screwball",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1703670574347,
+      "tag": "0004_smooth_wendigo",
+      "breakpoints": true
     }
   ]
 }
